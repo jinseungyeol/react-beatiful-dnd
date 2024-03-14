@@ -6,8 +6,8 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/:coinId">
-          <Coin />
+        <Route path="/:coinId"> {/** 라우팅 할 경로 */}
+          <Coin />              {/** 라우팅 시에 보여줄 컴포넌트 */}
         </Route>
         <Route path="/">
           <Coins />

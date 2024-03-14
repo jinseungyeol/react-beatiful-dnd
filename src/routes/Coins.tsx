@@ -86,7 +86,7 @@ function Coins() {
         <CoinsList>
             {coins.map(coin => 
             <Coin key={coin.id}>
-                <Link to={{
+              <Link to={{
                   pathname: `/${coin.id}`,
                   state: {name: coin.name}
                 }}>
