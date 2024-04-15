@@ -33,9 +33,10 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0,0,0,0.5);
   padding: 10px 20px;
   border-radius: 10px;
+  color: #fff;
 `;
 
 const OverviewItem = styled.div`
@@ -69,7 +70,7 @@ const Tab = styled.span<{$isActive: boolean}>`
   background: rgba(0,0,0,0.5);
   padding: 7px 0;
   border-radius: 10px;
-  color: ${props => props.$isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${props => props.$isActive ? props.theme.accentColor : 'white'};
   a {
     display: block;
   }
@@ -138,7 +139,11 @@ interface PriceData {
   };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({isDark}: ICoinProps) {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -174,7 +179,7 @@ function Coin() {
               </OverviewItem>
               <OverviewItem>
                 <span>Price:</span>
-                <span>{tickersData?.quotes.USD.price}</span>
+                <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
               </OverviewItem>
             </Overview>
             <Description>{infoData?.description}</Description>
@@ -203,7 +208,7 @@ function Coin() {
                 <Price />
               </Route>
               <Route path={`/${coinId}/chart`}>
-                <Chart coinId={coinId}/>
+                <Chart isDark={isDark} coinId={coinId}/>
               </Route>
             </Switch>
           </>
