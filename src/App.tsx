@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
 import DragabbleCard from "./Components/DragabbleCard";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,7 +33,10 @@ const Board = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
+  const [isRendering, setIsRendering] = useState(false);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (isRendering) return;
+
     if (!destination) return;
     setToDos(oldToDos => {
       const toDosCopy = [...oldToDos];
@@ -42,6 +46,11 @@ function App() {
       toDosCopy.splice(destination?.index, 0, draggableId);
       return toDosCopy;
     })
+
+    setIsRendering(true);
+    setTimeout(() => {
+      setIsRendering(false);
+    }, 500);
   }
   return (
     <DragDropContext onDragEnd={onDragEnd}>
